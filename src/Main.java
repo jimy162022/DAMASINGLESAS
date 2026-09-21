@@ -385,3 +385,37 @@ public Main() {
             }
         }
     }
+
+
+    void pasarPieza(int f, int c) {
+
+        tablero[f][c] =
+                tablero[filaSel][colSel];
+
+
+        tablero[filaSel][colSel] = 0;
+    }
+
+
+    // convertir ficha normal en dama
+
+    void coronar(int f, int c) {
+
+
+        // Roja llega arriba
+
+        if (tablero[f][c] == 1
+                && f == 0) {
+
+            tablero[f][c] = 3;
+        }
+
+
+        // Negra llega abajo
+
+        if (tablero[f][c] == 2
+                && f == 7) {
+
+            tablero[f][c] = 4;
+        }
+    }
