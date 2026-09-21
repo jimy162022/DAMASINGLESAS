@@ -566,3 +566,151 @@ public Main() {
 
         return false;
     }
+
+
+    // revisar si un jugador puede seguir jugando
+
+    boolean tieneMovimientos(int jugador) {
+
+
+        if (hayCaptura(jugador)) {
+
+            return true;
+        }
+
+
+        for (int f = 0; f < 8; f++) {
+
+            for (int c = 0; c < 8; c++) {
+
+
+                int pieza = tablero[f][c];
+
+
+                if (!esDelJugador(
+                        jugador,
+                        pieza
+                )) {
+
+                    continue;
+                }
+
+
+                int[][] direcciones;
+
+
+                if (esDama(pieza)) {
+
+                    direcciones = new int[][]{
+
+                            {-1, -1},
+                            {-1, 1},
+
+                            {1, -1},
+                            {1, 1}
+                    };
+
+                }
+
+                else if (pieza == 1) {
+
+                    direcciones = new int[][]{
+
+                            {-1, -1},
+                            {-1, 1}
+                    };
+
+                }
+
+                else {
+
+                    direcciones = new int[][]{
+
+                            {1, -1},
+                            {1, 1}
+                    };
+                }
+
+
+                for (int[] d : direcciones) {
+
+
+                    int nuevaFila =
+                            f + d[0];
+
+
+                    int nuevaCol =
+                            c + d[1];
+
+
+                    if (
+
+                            dentro(
+                                    nuevaFila,
+                                    nuevaCol
+                            )
+
+                                    &&
+
+                                    tablero[nuevaFila][nuevaCol] == 0
+
+                    ) {
+
+                        return true;
+                    }
+                }
+            }
+        }
+
+
+        return false;
+    }
+
+
+    // Cambiar de jugador
+
+    void cambiarTurno() {
+
+
+        int ganador = turno;
+
+
+        if (turno == 1) {
+
+            turno = 2;
+
+        } else {
+
+            turno = 1;
+        }
+
+
+        filaSel = -1;
+        colSel = -1;
+
+
+        // Si el rival no puede moverse, pierde
+
+        if (!tieneMovimientos(turno)) {
+
+
+            terminado = true;
+
+
+            if (ganador == 1) {
+
+                estado.setText(
+                        "Ganaron las Rojas"
+                );
+
+            } else {
+
+                estado.setText(
+                        "Ganaron las Negras"
+                );
+            }
+        }
+
+
+        dibujar();
+    }
