@@ -138,3 +138,69 @@ public Main() {
 
         dibujar();
     }
+
+    // casilla
+
+    void clic(int f, int c) {
+
+        if (terminado) {
+
+            return;
+        }
+
+
+        int pieza = tablero[f][c];
+
+
+        // no  ficha seleccionada
+
+        if (filaSel == -1) {
+
+            seleccionar(f, c);
+        }
+
+
+        // cambiar la ficha seleccionada
+
+        else if (!capturaMultiple && esMia(pieza)) {
+
+            seleccionar(f, c);
+        }
+
+
+        //  mover a casilla vacia
+
+        else if (pieza == 0) {
+
+            mover(f, c);
+        }
+    }
+
+
+    void seleccionar(int f, int c) {
+
+        if (!esMia(tablero[f][c])) {
+
+            return;
+        }
+
+
+        // la captura es obligatoria
+
+        if (hayCaptura(turno)
+                && !puedeCapturar(f, c)) {
+
+            estado.setText(
+                    "Hay una captura obligatoria"
+            );
+
+            return;
+        }
+
+
+        filaSel = f;
+        colSel = c;
+
+
+        dibujar();
+    }
