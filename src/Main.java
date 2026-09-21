@@ -276,3 +276,112 @@ public Main() {
 
             return;
         }
+
+
+        // ----------------------
+        // CAPTURA
+        // ----------------------
+
+        if (Math.abs(diferenciaCol) == 2
+
+                && (
+
+                (dama
+                        && Math.abs(diferenciaFila) == 2)
+
+                        ||
+
+                        (!dama
+                                && diferenciaFila == direccion * 2)
+
+        )) {
+
+
+            int filaMedio =
+                    (filaSel + filaDestino) / 2;
+
+
+            int colMedio =
+                    (colSel + colDestino) / 2;
+
+
+            int rival =
+                    tablero[filaMedio][colMedio];
+
+
+            if (rival != 0
+                    && !mismoJugador(
+                    pieza,
+                    rival
+            )) {
+
+
+                boolean eraDama = dama;
+
+
+                pasarPieza(
+                        filaDestino,
+                        colDestino
+                );
+
+
+                // eliminar laa ficha capturada
+
+                tablero[filaMedio][colMedio] = 0;
+
+
+                coronar(
+                        filaDestino,
+                        colDestino
+                );
+
+
+                // si llega al final durante una captura
+                // se convierte en dama y termina su turno
+
+                if (!eraDama
+                        && esDama(
+                        tablero[filaDestino][colDestino]
+                )) {
+
+
+                    capturaMultiple = false;
+
+                    cambiarTurno();
+
+                    return;
+                }
+
+
+                filaSel = filaDestino;
+                colSel = colDestino;
+
+
+                // Revisar captura multiple
+
+                if (puedeCapturar(
+                        filaDestino,
+                        colDestino
+                )) {
+
+
+                    capturaMultiple = true;
+
+
+                    estado.setText(
+                            "Debes seguir capturando"
+                    );
+
+
+                    dibujar();
+
+                } else {
+
+
+                    capturaMultiple = false;
+
+                    cambiarTurno();
+                }
+            }
+        }
+    }
