@@ -204,3 +204,75 @@ public Main() {
 
         dibujar();
     }
+
+
+    void mover(int filaDestino,
+               int colDestino) {
+
+
+        int pieza =
+                tablero[filaSel][colSel];
+
+
+        int diferenciaFila =
+                filaDestino - filaSel;
+
+
+        int diferenciaCol =
+                colDestino - colSel;
+
+
+        boolean dama =
+                esDama(pieza);
+
+
+        int direccion;
+
+
+        if (turno == 1) {
+
+            direccion = -1;
+
+        } else {
+
+            direccion = 1;
+        }
+
+
+        // ----------------------
+        // MOVIMIENTO NORMAL
+        // ----------------------
+
+        if (!capturaMultiple
+                && !hayCaptura(turno)
+                && Math.abs(diferenciaCol) == 1
+
+                && (
+
+                (dama
+                        && Math.abs(diferenciaFila) == 1)
+
+                        ||
+
+                        (!dama
+                                && diferenciaFila == direccion)
+
+        )) {
+
+
+            pasarPieza(
+                    filaDestino,
+                    colDestino
+            );
+
+
+            coronar(
+                    filaDestino,
+                    colDestino
+            );
+
+
+            cambiarTurno();
+
+            return;
+        }
