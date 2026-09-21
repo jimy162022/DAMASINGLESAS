@@ -92,3 +92,49 @@ public Main() {
 
     setVisible(true);
 }
+
+
+    // fichas
+
+    void iniciar() {
+
+        for (int f = 0; f < 8; f++) {
+
+            for (int c = 0; c < 8; c++) {
+
+                tablero[f][c] = 0;
+
+
+                if ((f + c) % 2 == 1) {
+
+                    // negras arriba
+
+                    if (f < 3) {
+
+                        tablero[f][c] = 2;
+                    }
+
+
+                    // rojass abajo
+
+                    if (f > 4) {
+
+                        tablero[f][c] = 1;
+                    }
+                    }
+              }
+           }
+
+
+        turno = 1;
+
+        filaSel = -1;
+        colSel = -1;
+
+        capturaMultiple = false;
+
+        terminado = false;
+
+
+        dibujar();
+    }
