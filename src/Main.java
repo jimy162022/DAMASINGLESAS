@@ -411,11 +411,158 @@ public Main() {
         }
 
 
-        // Negra llega abajo
+        // negra llega abajo
 
         if (tablero[f][c] == 2
                 && f == 7) {
 
             tablero[f][c] = 4;
         }
+    }
+
+
+    // se checa si una ficha puede capturar
+
+    boolean puedeCapturar(int f, int c) {
+
+        int pieza = tablero[f][c];
+
+
+        if (pieza == 0) {
+
+            return false;
+        }
+
+
+        int[][] direcciones;
+
+
+        // Las damas pueden ir en ambos sentidos
+
+        if (esDama(pieza)) {
+
+            direcciones = new int[][]{
+
+                    {-1, -1},
+                    {-1, 1},
+
+                    {1, -1},
+                    {1, 1}
+            };
+
+        }
+
+        // Roja va hacia arriba
+
+        else if (pieza == 1) {
+
+            direcciones = new int[][]{
+
+                    {-1, -1},
+                    {-1, 1}
+            };
+
+        }
+
+        // negra va hacia abajo
+
+        else {
+
+            direcciones = new int[][]{
+
+                    {1, -1},
+                    {1, 1}
+            };
+        }
+
+
+        for (int[] d : direcciones) {
+
+
+            int filaMedio =
+                    f + d[0];
+
+
+            int colMedio =
+                    c + d[1];
+
+
+            int filaDestino =
+                    f + d[0] * 2;
+
+
+            int colDestino =
+                    c + d[1] * 2;
+
+
+            if (
+
+                    dentro(
+                            filaDestino,
+                            colDestino
+                    )
+
+                            &&
+
+                            dentro(
+                                    filaMedio,
+                                    colMedio
+                            )
+
+                            &&
+
+                            tablero[filaDestino][colDestino] == 0
+
+                            &&
+
+                            tablero[filaMedio][colMedio] != 0
+
+                            &&
+
+                            !mismoJugador(
+                                    pieza,
+                                    tablero[filaMedio][colMedio]
+                            )
+
+            ) {
+
+                return true;
+            }
+        }
+
+
+        return false;
+    }
+
+
+    // checaar si alguna ficha tiene captura
+
+    boolean hayCaptura(int jugador) {
+
+
+        for (int f = 0; f < 8; f++) {
+
+            for (int c = 0; c < 8; c++) {
+
+
+                if (
+
+                        esDelJugador(
+                                jugador,
+                                tablero[f][c]
+                        )
+
+                                &&
+
+                                puedeCapturar(f, c)
+
+                ) {
+
+                    return true;
+                }
+            }
+        }
+
+
+        return false;
     }
