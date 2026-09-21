@@ -714,3 +714,203 @@ public Main() {
 
         dibujar();
     }
+
+    boolean esMia(int pieza) {
+
+        return esDelJugador(
+                turno,
+                pieza
+        );
+    }
+
+
+    boolean esDelJugador(
+            int jugador,
+            int pieza) {
+
+
+        if (jugador == 1) {
+
+            return pieza == 1
+                    || pieza == 3;
+
+        } else {
+
+            return pieza == 2
+                    || pieza == 4;
+        }
+    }
+
+
+    boolean esDama(int pieza) {
+
+        return pieza == 3
+                || pieza == 4;
+    }
+
+
+    boolean mismoJugador(
+            int pieza1,
+            int pieza2) {
+
+
+        boolean primeraRoja =
+                pieza1 == 1
+                        || pieza1 == 3;
+
+
+        boolean segundaRoja =
+                pieza2 == 1
+                        || pieza2 == 3;
+
+
+        return primeraRoja
+                == segundaRoja;
+    }
+
+
+    boolean dentro(
+            int f,
+            int c) {
+
+
+        return f >= 0
+                && f < 8
+                && c >= 0
+                && c < 8;
+    }
+
+
+    // Mostrar tablero y fichas
+
+    void dibujar() {
+
+
+        for (int f = 0; f < 8; f++) {
+
+            for (int c = 0; c < 8; c++) {
+
+
+                JButton boton =
+                        botones[f][c];
+
+
+                boton.setText("");
+
+
+                // Colores del tablero
+
+                if ((f + c) % 2 == 0) {
+
+                    boton.setBackground(
+                            new Color(
+                                    235,
+                                    220,
+                                    195
+                            )
+                    );
+
+                } else {
+
+                    boton.setBackground(
+                            new Color(
+                                    110,
+                                    80,
+                                    60
+                            )
+                    );
+                }
+
+
+                int pieza =
+                        tablero[f][c];
+
+
+                // Ficha roja
+
+                if (pieza == 1) {
+
+                    boton.setText("●");
+
+                    boton.setForeground(
+                            Color.RED
+                    );
+                }
+
+
+                // Ficha negra
+
+                if (pieza == 2) {
+
+                    boton.setText("●");
+
+                    boton.setForeground(
+                            Color.BLACK
+                    );
+                }
+
+
+                // Dama roja
+
+                if (pieza == 3) {
+
+                    boton.setText("R");
+
+                    boton.setForeground(
+                            Color.RED
+                    );
+                }
+
+
+                // Dama negra
+
+                if (pieza == 4) {
+
+                    boton.setText("N");
+
+                    boton.setForeground(
+                            Color.BLACK
+                    );
+                }
+
+
+                // Seleccionada
+
+                if (f == filaSel
+                        && c == colSel) {
+
+                    boton.setBackground(
+                            Color.YELLOW
+                    );
+                }
+            }
+        }
+
+
+        if (!terminado
+                && !capturaMultiple) {
+
+
+            if (turno == 1) {
+
+                estado.setText(
+                        "Turno: Rojas"
+                );
+
+            } else {
+
+                estado.setText(
+                        "Turno: Negras"
+                );
+            }
+        }
+    }
+
+
+    public static void main(String[] args) {
+
+        SwingUtilities.invokeLater(
+                Main::new
+        );
+    }
+}
